@@ -244,7 +244,7 @@ class Kpi_index(models.Model):
         ('15','None'),
     )
     kpi_year_list = (('2020','2563'),('2021','2564'))
-    unit_list = (('1','-'),('2','ร้อยละ'),('3','ต่อแสนประชากร'))
+    unit_list = (('1','-'),('2','ร้อยละ'),('3','ต่อแสนประชากร'),('4','คน'),)
 
     kpi = models.CharField(max_length=5)
     kpi_name = models.TextField()
