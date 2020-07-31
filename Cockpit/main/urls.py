@@ -14,6 +14,5 @@ urlpatterns = [
     path('ajax/load-cities/', load_cities, name='ajax_load_cities'),
     path('list/', PersonList, name='person_list'),
     path('<int:pk>/', PersonUpdateView.as_view(),name='person_update'),
-    
-    
+       
 ]
