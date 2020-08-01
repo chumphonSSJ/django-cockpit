@@ -1,5 +1,4 @@
 import datetime
-from chartjs.views.lines import BaseLineChartView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -9,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views.generic import UpdateView, DetailView, CreateView, ListView, TemplateView
+from django.views.generic import UpdateView, DetailView, CreateView, ListView
 from main.forms import KeyInputForm, PersonForm, UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from main.models import Ssj, Reponse_kpi, Profile, Kpi, KeyInput, Country, City, Person
 
@@ -18,22 +17,6 @@ from main.models import Ssj, Reponse_kpi, Profile, Kpi, KeyInput, Country, City,
 def Home(request):
     return render(request, 'main/home.html')
 
-class LineChartJsonView(BaseLineChartView):
-    def get_labels(self):
-        return ["January","February","March","April","May","June","July"]
-
-    def get_providers(self):
-        return ["Central","Eastside","Westside"]
-
-    def get_data(self):
-        return [
-            [75,44,92,11,44.95,35],
-            [41,92,18,3,73,87,92],
-            [87,21,94,3,90,13,65],
-    ]
-
-line_chart = TemplateView.as_view(template_name='charths.html')
-line_chart_json = LineChartJsonView.as_view()
 
 def Register(request):
     if request.method == 'POST':

@@ -33,18 +33,16 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     
     'crispy_forms',
-    'chartjs',
     'widget_tweaks',
     'django_filters',
     'dj_chartjs',
-    'main',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
- 
+    'main.apps.MainConfig',
 ]
 
 MIDDLEWARE = [
@@ -85,10 +83,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cockpit',
-        'HOST': '61.19.80.157',
-        'PORT': '3306',
+        'HOST': 'localhost',
+        'PORT': '3300',
         'USER': 'root',
-        'PASSWORD': 'P@ssw0rdhdc++',
+        'PASSWORD': '230273',
     }
 }
 
