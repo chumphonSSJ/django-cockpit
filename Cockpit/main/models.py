@@ -225,7 +225,7 @@ class Kpi_hosp(models.Model):
         return self.hospcode +' - '+self.kpi_id
 
 class Kpi_index(models.Model):
-    ex_list = (('pp','PP&P Excellence'),('se','Service'),('pe','People Excellence'),('ge','Government Excellence'))
+    ex_list = (('pp','PP&P Excellence'),('se','Service'),('pe','People Excellence'),('ge','Government Excellence'),('ncd','NCD'))
     response_list = (
         ('1','พัฒนายุทธศาสตร์สาธารณสุข'),
         ('2','บริหารทั่วไป'),
