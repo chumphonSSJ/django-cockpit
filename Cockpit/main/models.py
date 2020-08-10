@@ -76,7 +76,7 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
-        return  self.user.first_name+' - '+self.ssj+' - '+self.group
+        return  self.user.first_name
     
     class Meta:
         db_table = 'main_profile'
