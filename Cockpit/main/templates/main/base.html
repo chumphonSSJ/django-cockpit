@@ -1,12 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     {% if title %}
-      <title>Cockpit 11- {{ title }}</title>
+      <title> {{ title }}</title>
     {% else %}
-      <title>Cockpit</title>
+      <title>Cockpit 11</title>
     {% endif %} 
 
     <!-- Meta -->
@@ -22,7 +21,8 @@
     <!-- Favicon icon -->
     <link rel="icon" href="{% static 'assets/images/favicon.ico' %}" type="image/x-icon">
     <!-- vendor css -->
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
 </head>
 
 <body class="">
@@ -61,6 +61,9 @@
 					    <a href="{% url 'home' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">HOME</span></a>
 					</li>
 					<li class="nav-item">
+					    <a href="{% url 'input' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user m-r-5"></i></span><span class="pcoded-mtext">Input</span></a>
+					</li>
+					<li class="nav-item">
 					    <a href="{% url 'kpilistview' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">คำอธิบายตัวชี้วัด KPI</span></a>
 					</li>
 					<li class="nav-item">
@@ -76,11 +79,15 @@
 					</li>
 
 					<li class="nav-item">
-					    <a href="{% url 'keyin' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">บันทึกข้อมูล</span></a>
+					    <a href="{% url 'kpiinput' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">บันทึกข้อมูล</span></a>
 					</li>
 					<li class="nav-item">
 					    <a href="{% url 'kpilist' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Kpi List</span></a>
 					</li>
+					<li class="nav-item">
+					    <a href="{% url 'chart-js' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Chart JS</span></a>
+					</li>
+					<li>
 					    <a href="{% url 'logout' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-log-out m-r-5"></i></span><span class="pcoded-mtext"> Logout</span></a>
 					</li>
 					{% else %}
@@ -131,8 +138,6 @@
 			
 	</header>
 	<!-- [ Header ] end -->
-	
-	
 
 <!-- [ Main Content ] start -->
 
@@ -141,17 +146,13 @@
 {% endblock content %}
     
 <!-- [ Main Content ] end -->
-
-
     <!-- Required Js -->
     <script src="{% static 'assets/js/vendor-all.min.js' %}"></script>
     <script src="{% static 'assets/js/plugins/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/ripple.js' %}"></script>
     <script src="{% static 'assets/js/pcoded.min.js' %}"></script>
-
 	<!-- Apex Chart -->
 	<script src="{% static 'assets/js/plugins/apexcharts.min.js' %}"></script>
-
 	<!-- custom-chart js -->
 	<script src="{% static 'assets/js/pages/dashboard-main.js' %}"></script>
 </body>
