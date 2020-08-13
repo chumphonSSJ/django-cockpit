@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     
     'crispy_forms',
+    'chartjs',
     'widget_tweaks',
     'django_filters',
     'dj_chartjs',
@@ -82,11 +83,11 @@ WSGI_APPLICATION = 'cockpit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cockpit',
-        'HOST': '61.19.80.157',
-        'PORT': '3306',
+        'NAME': 'newcockpit',
+        'HOST': 'localhost',
+        'PORT': '3300',
         'USER': 'root',
-        'PASSWORD': 'P@ssw0rdhdc++',
+        'PASSWORD': 'xxxxxxxxx',
     }
 }
 
@@ -113,9 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 

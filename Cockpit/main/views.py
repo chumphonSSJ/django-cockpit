@@ -5,18 +5,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse, HttpResponseRedirect
+from django.db.models import Sum
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView, DetailView, CreateView, ListView
-from main.forms import KeyInputForm, PersonForm, UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from main.models import Ssj, Reponse_kpi, Profile, Kpi, KeyInput, Country, City, Person
-
+from main.forms import KeyInputForm, UserRegisterForm, UserUpdateForm, ProfileUpdateForm, InputForm
+from main.models import *
 # Create your views here.
 
 def Home(request):
     return render(request, 'main/home.html')
-
 
 def Register(request):
     if request.method == 'POST':
@@ -29,7 +28,6 @@ def Register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'main/register.html', {'form':form})
-
 
 @login_required
 def profile(request):
@@ -65,7 +63,7 @@ def KeyIn(request):
         return redirect('home')
     
     return render(request, 'main/kpi_input.html', {'form':form})
-    
+
 @login_required
 def KeyInput(request):
     form = KeyInputForm
@@ -76,66 +74,55 @@ def KeyInput(request):
             return redirect('home')
 
     return render(request, 'main/kpi_input.html', {'form':form})
-
+    
 @login_required
 def KpiList(request):
-    kpi = Kpi.objects.all()
-    context = {'kpi':kpi}
-    return render(request, 'main/key_list.html',context)
+    index = Index.objects.all()
+    context = {'index':index}
+    return render(request, 'main/kpi_list_all.html',context)
 
 class KpiListView(ListView):
-    model = Kpi
+    model = Index
     template_name = 'main/key_list.html'
-    context_object_name = 'kpi'
-    paginate_by = 7
-
+    context_object_name = 'index'
+    paginate_by = 5
 
 class KpiDetailView(DetailView):
-    model = Kpi
+    model = Index
     template_name = 'main/kpi_detail.html'
+
+def population_chart(request):
+    labels = []
+    data = []
+ 
+    queryset = Cmpo.objects.values('name').annotate(population=Sum('population')).order_by('-population') 
+    for entry in queryset:
+        labels.append(entry['name'])
+        data.append(entry['population'])
+     
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
+
+def ChartJS(request):
+    return render(request, 'main/chartjs.html')
+
+def Input(request):
+    form = InputForm
+    if request.method =='POST':
+        form = InputForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    return render(request, 'main/input_form.html', {'form':form})
+
+def load_index(request):
+    group_id = request.GET.get('group')
+    indexes = Index.objects.filter(group_id=group_id).order_by('name')
+    return render(request, 'main/index_dropdown_list_options.html',{'indexes':indexes})
 
 def PersonList(request):
     people = Person.objects.all()
     context = {'people':people}
     return render(request, 'main/person_list.html', context)
-
-def PersonCreate(request):
-    form = PersonForm
-    if request.method =='POST':
-        form = PersonForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('person_list')
-    return render(request, 'main/person_form.html', {'form':form})
-
-class PersonUpdateView(UpdateView):
-    model = Person
-    template_name = "main/person_form.html"
-    form_class = PersonForm    
-    success_url = reverse_lazy('person_list')
-
-def load_cities(request):
-    country_id = request.GET.get('country')
-    cities = City.objects.filter(country_id=country_id).order_by('name')
-    return render(request, 'main/city_dropdown_list_options.html', {'cities': cities})
-
-def result(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request,'main/result.html', {'question':question})
-
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        return render(request, 'main/detail.html',{
-            'question':question,
-            'error_message':'You did not select a choice',
-        })
-    else:
-        selected_choice.votes +=1
-        selected_choice.save()
-        return HttpResponseRedirect(reversed('main:results', args=(question_id)))
-
-
-
